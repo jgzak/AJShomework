@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
+    <script type="text/javascript" src="hm-index.js"></script>
+
+
+    <style type="text/css">
+
+
+    	.toDoHigh {
+    		background-color: red;	
+    		margin-top:10px;
+    		padding:10px;
+    		color:white;
+    	}
+
+    	.toDoMedium {
+    		background-color: #7f7f00;
+    		margin-top:10px;
+    		padding:10px;	
+    		color:white;
+    	}
+
+    	.toDoLow {
+    		background-color: green;
+    		margin-top:10px;
+    		padding:10px;	
+    		color:white;
+    	}
+	
+		.strongRed {
+			background-color: red;
+		}
+		.strongGreen {
+			background-color: green;
+		}
+		.strongYellow {
+			background-color: yellow;
+		}
+
+
+		.lightRed {
+			background-color: #ff7f7f;
+		}
+		.lightGreen {
+			background-color: #66ff66;
+		}
+		.lightYellow {
+			background-color: #7f7f00;
+		}
+
+
+		.superLightRed {
+			background-color: #ffe5e5;
+		}
+		.superLightGreen {
+			background-color: #ccffcc;
+		}
+		.superLightYellow {
+			background-color: #ffffb2;
+		}
+
+
+		label {
+			display: block;
+		}
+
+		.primSec {
+			border-style: solid; 
+			border-color: #7e7e7e; 
+			border-width: 1px;
+			margin: 20px 0 20px 0;
+			border-radius: 10px;
+			color:#7e7e7e;
+			padding:10px;
+		}
+
+		.folderItem {
+			padding:2px;
+			margin:5px;
+		}
+
+		.fileItem {
+			padding-left:28px;
+			margin:2px;
+		}
+    </style>
+  </head>
+
+  <body ng-app="MyApp">
+  	<div ng-controller="MainController as ctrl" ng-class="ctrl.classObject.container" style="padding: 20px; ">
+  		<label>
+  			<input type="radio" name="color" ng-model="ctrl.classObject" ng-value="ctrl.classInit" checked />None
+  		</label>
+  		<label>
+  			<input type="radio" name="color" ng-model="ctrl.classObject" ng-value="ctrl.classRed"/>Red
+  		</label>
+  		<label>
+	  		<input type="radio" name="color" ng-model="ctrl.classObject" ng-value="ctrl.classGreen"/>Green
+	  	</label>
+	  	<label>
+	  		<input type="radio" name="color" ng-model="ctrl.classObject" ng-value="ctrl.classYellow"/>Yellow
+	  	</label>
+
+  		<div class="primSec" ng-class="ctrl.classObject.top" style="padding: 5px; margin-bottom:5px;"><h3>Top</h3></div>
+  		<div class="primSec" ng-class="ctrl.classObject.bottom" style="padding: 5px;"><h3>Bottom</h3></div>	
+
+  		<input type="checkbox" ng-model="ctrl.showFiles">Show Files</input>
+  		<div>
+	  		<div style="float:left; width:400px"> 
+		  		<div class="folderItem" ng-repeat="folder in ctrl.interArray">
+					<label ng-bind="folder.name"></label>
+					<div class="fileItem" ng-repeat="file in ctrl.interArray[$index].files" ng-show="ctrl.showFiles">
+						<label ng-bind="file.name"></label>
+					</div>
+				</div>
+			</div>
+			<div style="float:left; width:400px">
+				<button ng-click="ctrl.addNewFile()">Add</button>
+				<input type="text" ng-model="ctrl.newFile">
+				<label>
+  					<input type="radio" name="folder" ng-model="ctrl.folderIndex" ng-value=0 checked />Personal
+		  		</label>
+		  		<label>
+		  			<input type="radio" name="folder" ng-model="ctrl.folderIndex" ng-value=1 />Work
+		  		</label>
+		  		<label>
+			  		<input type="radio" name="folder" ng-model="ctrl.folderIndex" ng-value=2 />Trip
+			  	</label>
+			</div>
+			<div style="clear:both"></div>
+			<div style="margin-top:20px; padding:20px;" class="primSec">
+				<div style="margin:10px">First:<span ng-if="ctrl.showSolid">{{ctrl.fname}}</span>
+					<span ng-if="ctrl.showEdit"><input type="text" ng-model="ctrl.fname"/></span>
+				</div>
+				<div style="margin:10px">Last:<span ng-if="ctrl.showSolid">{{ctrl.lname}}</span>
+					<span ng-if="ctrl.showEdit"><input type="text" ng-model="ctrl.lname"/></span>
+				</div>
+				<div style="margin:10px">email:<span>jgzak@yahoo.com</span></div>
+				<div>
+					<button type="button" ng-if="ctrl.showSolid" ng-click="ctrl.myEdit()">Edit</button>
+					<button type="button" ng-if="ctrl.showEdit" ng-click="ctrl.mySave()">Save</button>
+					<button type="button" ng-if="ctrl.showEdit" ng-click="ctrl.myCancel()">Cancel</button>
+				</div>
+			</div>
+
+			<div style="margin-top:40px; padding:20px;" class="primSec">
+				<label style="padding:4px; width: 50px;">To Do:
+					<input type="text" ng-model="ctrl.toDo">
+				</label>
+				<label style="padding:4px; width: 50px;">Description
+					<input type="text" ng-model="ctrl.toDoDescription">
+				</label>
+				<div style="padding:4px; width:100px;">
+					Priority:
+					<label>
+						<input type="radio" name="priority" ng-model="ctrl.toDoPriorityClass" ng-value=0 />High
+					</label>
+					<label>
+						<input type="radio" name="priority"  ng-model="ctrl.toDoPriorityClass" ng-value=1 />Medium
+					</label>
+					<label>
+						<input type="radio" name="priority" ng-model="ctrl.toDoPriorityClass" ng-value=2  checked />Low
+					</label>
+				</div>
+				</br>
+				<button type="button" ng-click="ctrl.onAddToDo()">Add ToDo</button>
+				<div ng-repeat="_toDo in ctrl.toDos" style="width:25%">
+					<div class="{{_toDo.priority}}">
+						<label ng-bind="_toDo.toDo"></label>
+						<label ng-bind="_toDo.description"></label>
+						<button type="button" ng-click="ctrl.onRemoveToDo($index)">Remove</button>
+					</div>
+				</div>
+			</div>
+		</div>
+  		
+  	</div>
+  </body>
+</html>
