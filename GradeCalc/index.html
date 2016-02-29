@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
+	    <script type="text/javascript" src="services.js"></script>
+	    <script type="text/javascript" src="index.js"></script>
+	    <style>
+
+	    	label {
+	    		padding: 2px;
+	    		margin: 2px;
+	    		width: 120px;
+	    		display: inline-block;
+	    	}
+
+	    	button {
+	    		margin: 2px;
+	    		display: inline-block;
+	    		float: right;
+	    	}
+	    	.floatLeft {
+	    		float: left;
+	    		width: 282px;
+	    	}
+
+	    	.formBox {
+	    		width:600px;
+	    	}
+
+	    	.contentBox {
+	    		margin: 10px;
+	    		padding:5px;
+	    		border-color: black;
+	    		border-style: solid;
+	    		border-width: 1px;
+	    		
+	    	}
+
+	    	.assignment {
+	    		margin-bottom: 12px;
+	    	}
+
+	    	.avgInfo {
+	    		width: 40px;
+	    		display: inline-block;
+	    	}
+
+
+	    </style>
+	</head>
+    <body ng-app="MyApp" ng-controller="MainController as ctrl">
+    	<div class="contentBox formBox">
+    		<label for = "text">Student Name</label><input type="text" />
+    		<label for = "text">Student ID</label><input type="text" />
+    	</div>
+
+    	<div class="contentBox formBox">
+    		<form>
+	    		<label for = "text">Assignment Name</label><input type="text" ng-model="ctrl.assignmentName" required/></br>
+	    		<label for = "number">Assignment Grade</label><input type="number" ng-model="ctrl.assignmentGrade" required/>
+	    		<button ng-click="ctrl.addAssignment()">Add</button>
+    		</form>
+    	</div>
+
+
+    	<div>
+    		<div class="contentBox floatLeft"><h3>Assignments</h3>
+    			<div class="assignment" ng-repeat="assignment in ctrl.assignments">
+    				<div><span>Name: </span>{{assignment.name}}</div>
+    				<div><span>Grade: </span>{{assignment.grade}}</div>
+    			</div>
+    		</div>
+    		<div class="contentBox floatLeft"><h3>Average Info</h3>
+    			<div >Avg:<span class="avgInfo" ng-bind="ctrl.avg"></span></div>
+    			<div>Grd:<span class="avgInfo" ng-bind="ctrl.grd"></span></div>
+    			<div>Pass:<span class="avgInfo" ng-bind="ctrl.pss"></span></div>
+    		</div>
+    		<div style="clear:both" />
+    	</div>
+    	
+    </body>
+</html>
